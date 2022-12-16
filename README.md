@@ -4,7 +4,7 @@ Unreal Engine plugin for automatic and simplified loading screen creation.
 
 With some shader knowledge you can customize almost any aspect of the loading screen or use example materials as your base.
 
-If you want to support me subscribe to me on [YouTube](https://www.youtube.com/c/FerlinDev) and/or follow my [Twitter](https://twitter.com/FerlinDev)
+**If you want to support me subscribe to me on [YouTube](https://www.youtube.com/c/FerlinDev) and/or follow my [Twitter](https://twitter.com/FerlinDev)**
 
 ### Adding Easy Loading Screen to your project 
 
