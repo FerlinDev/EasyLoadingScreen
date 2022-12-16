@@ -4,6 +4,8 @@ Unreal Engine plugin for automatic and simplified loading screen creation.
 
 With some shader knowledge you can customize almost any aspect of the loading screen or use example materials as your base.
 
+If you want to support me subscribe to me on [YouTube](https://www.youtube.com/c/FerlinDev) and/or [Twitter](https://twitter.com/FerlinDev)
+
 ### Adding Easy Loading Screen to your project 
 
 To add the plugin to your project, download the repository ZIP file.
@@ -13,7 +15,8 @@ Add Plugins folder inside your project.
 ![image](https://user-images.githubusercontent.com/48950953/208145817-255b9795-616d-4005-a588-0745485635ab.png)
 
 Then extract EasyLoadingScreen into the created folder.
-![image](https://user-images.githubusercontent.com/48950953/208146114-27a4dcdd-ec4f-4e4f-89a1-d21d86d2da62.png)
+![image](https://user-images.githubusercontent.com/48950953/208161365-16dfb953-0e52-4b86-9caa-452ee78ad7ce.png)
+
 
 After you open your project you will prompted that the following module is missing.
 
@@ -25,7 +28,7 @@ You can either build it by hand or let unreal do it automaticaly by pressing yes
 
 To use fade in and fade out animations for loading screen you will need to create a new function inside your Game Instance.
 
-Great tutorial on Game Instance : https://youtu.be/5w594D3qtLs
+Great tutorial on [Game Instance](https://youtu.be/5w594D3qtLs)
 
 Open FUNCTION_HOLDER inside Plugin's content folder and copy it's content to the Game Instance.
 ![image](https://user-images.githubusercontent.com/48950953/208149637-953aaf2b-a688-459e-9181-5f0eab7dfada.png)
@@ -88,4 +91,4 @@ Right -> Should the texture be placed in the right corner. False = Left Corner.
 
 Top -> Should the texture be placed in the top corner. False = Bottom Corner.
 
-Loading Icon -> Texture for the current animation frame .
+Loading Icon -> Texture for the current animation frame.
