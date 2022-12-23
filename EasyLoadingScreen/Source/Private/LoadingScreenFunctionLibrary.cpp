@@ -5,6 +5,7 @@
 #include "LoadingScreenSettings.h"
 
 float ULoadingScreenFunctionLibrary::TransitionDuration = -1;
+float ULoadingScreenFunctionLibrary::TransitionPhase = 0.0f;
 
 int32 ULoadingScreenFunctionLibrary::BackgroundImageIndex = -1;
 int32 ULoadingScreenFunctionLibrary::BackgroundImageArrayNum = -1;
@@ -13,6 +14,7 @@ int32 ULoadingScreenFunctionLibrary::LoadingSequenceIndex = 0;
 int32 ULoadingScreenFunctionLibrary::LoadingSequenceArrayNum = -1;
 float ULoadingScreenFunctionLibrary::LoadingSequenceInterval = -1;
 float ULoadingScreenFunctionLibrary::LoadingSequenceDeltaTime = 0.0f;
+float ULoadingScreenFunctionLibrary::LoadingSequenceTime = 0.0f;
 
 void ULoadingScreenFunctionLibrary::SetBackgroundImageIndex(const int32 NewIndex)
 {
@@ -22,6 +24,8 @@ void ULoadingScreenFunctionLibrary::SetBackgroundImageIndex(const int32 NewIndex
 	}
 
 	BackgroundImageIndex = NewIndex < 0 ? FMath::RandRange(0, BackgroundImageArrayNum - 1) : NewIndex % BackgroundImageArrayNum;
+	LoadingSequenceTime = 0.0f;
+	TransitionPhase = 0.0f;
 
 	ensureMsgf(NewIndex < BackgroundImageArrayNum, TEXT("SetLoadingImageIndex -> INDEX TOO BIG"));
 }
@@ -33,6 +37,21 @@ float ULoadingScreenFunctionLibrary::GetTransitionDuration()
 		TransitionDuration = GetDefault<ULoadingScreenSettings>()->TransitionDuration;
 	}
 	return TransitionDuration;
+}
+
+float ULoadingScreenFunctionLibrary::GetTransitionPhase()
+{
+	return TransitionPhase;
+}
+
+void ULoadingScreenFunctionLibrary::SetTransitionPhase(const float NewPhase)
+{
+	TransitionPhase = FMath::Clamp(NewPhase, 0,2);
+}
+
+ELoadingSequenceType ULoadingScreenFunctionLibrary::GetLoadingSequenceType()
+{
+	return GetDefault<ULoadingScreenSettings>()->SequenceType;
 }
 
 TArray<UMaterialInterface*> ULoadingScreenFunctionLibrary::GetLoadingSequence()
@@ -67,6 +86,11 @@ int32 ULoadingScreenFunctionLibrary::GetLoadingSequenceIndex()
 	return LoadingSequenceIndex;
 }
 
+float ULoadingScreenFunctionLibrary::GetLoadingSequenceTime()
+{
+	return LoadingSequenceTime;
+}
+
 float ULoadingScreenFunctionLibrary::GetLoadingSequenceInterval()
 {
 	if(LoadingSequenceInterval < 0)
@@ -78,6 +102,8 @@ float ULoadingScreenFunctionLibrary::GetLoadingSequenceInterval()
 
 void ULoadingScreenFunctionLibrary::IncrementLoadingSequenceIndex(const float DeltaTime)
 {
+	LoadingSequenceTime = LoadingSequenceTime + DeltaTime;
+	
 	if(LoadingSequenceArrayNum < 0)
 	{
 		LoadingSequenceArrayNum = GetLoadingSequence().Num();
@@ -91,6 +117,17 @@ void ULoadingScreenFunctionLibrary::IncrementLoadingSequenceIndex(const float De
 		LoadingSequenceDeltaTime = fmod(LoadingSequenceDeltaTime,AnimInterval);
 		LoadingSequenceIndex = LoadingSequenceArrayNum > 0 ? (LoadingSequenceIndex + 1) % LoadingSequenceArrayNum : 0;
 	}
+}
+
+void ULoadingScreenFunctionLibrary::SkipLoadingSequenceFrame()
+{
+	IncrementLoadingSequenceIndex(2 * GetLoadingSequenceInterval()); 
+	LoadingSequenceDeltaTime = 0.0f;
+}
+
+UMaterialInterface* ULoadingScreenFunctionLibrary::GetAnimatedMaterial()
+{
+	return Cast<UMaterialInterface>(GetDefault<ULoadingScreenSettings>()->AnimatedMaterial.TryLoad());
 }
 
 FImageSettings ULoadingScreenFunctionLibrary::GetBackgroundImage()
@@ -112,4 +149,9 @@ UMaterialInterface* ULoadingScreenFunctionLibrary::GetOverlayMaterial()
 	}
 	const FSoftObjectPath TransparentAssetPath("Material'/EasyLoadingScreen/M_FullyTransparent.M_FullyTransparent'");
 	return Cast<UMaterialInterface>(TransparentAssetPath.TryLoad());
+}
+
+UMaterialInterface* ULoadingScreenFunctionLibrary::GetTransitionMaterial()
+{
+	return Cast<UMaterialInterface>(GetDefault<ULoadingScreenSettings>()->TransitionMaterial.TryLoad());
 }

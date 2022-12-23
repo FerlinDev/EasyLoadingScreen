@@ -6,6 +6,13 @@
 #include "Engine/DeveloperSettings.h"
 #include "LoadingScreenSettings.generated.h"
 
+UENUM(BlueprintType)
+enum ELoadingSequenceType
+{
+	FrameAnimation,
+	AnimatedMaterial
+};
+
 USTRUCT(BlueprintType)
 struct FImageSettings
 {
@@ -41,10 +48,16 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category = "Background")
 	TArray<FImageSettings> BackgroundImages;
+	
+	UPROPERTY(Config, EditAnywhere, Category = "Loading Sequence")
+    TEnumAsByte<ELoadingSequenceType> SequenceType = ELoadingSequenceType::FrameAnimation;
 
-	UPROPERTY(Config, EditAnywhere, Category = "Loading Sequence", meta = (ClampMin = "1"))
+	UPROPERTY(Config, EditAnywhere, Category = "Loading Sequence", meta = (ClampMin = "1", EditCondition ="SequenceType==ELoadingSequenceType::FrameAnimation", EditConditionHides))
 	int Framerate = 24;
 	
-	UPROPERTY(Config, EditAnywhere, DisplayName = "Loading Sequence", Category = "Loading Sequence", meta = (AllowedClasses = "Material , MaterialInstance"))
+	UPROPERTY(Config, EditAnywhere, DisplayName = "Loading Sequence", Category = "Loading Sequence", meta = (AllowedClasses = "Material , MaterialInstance", EditCondition ="SequenceType==ELoadingSequenceType::FrameAnimation", EditConditionHides))
 	TArray<FSoftObjectPath> LoadingMaterials;
+
+	UPROPERTY(Config, EditAnywhere, DisplayName = "Loading Sequence", Category = "Loading Sequence", meta = (AllowedClasses = "Material , MaterialInstance", EditCondition ="SequenceType==ELoadingSequenceType::AnimatedMaterial", EditConditionHides))
+	FSoftObjectPath AnimatedMaterial;
 };

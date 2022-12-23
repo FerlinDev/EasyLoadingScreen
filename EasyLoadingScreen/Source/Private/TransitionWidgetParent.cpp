@@ -5,14 +5,31 @@
 #include "LoadingScreenFunctionLibrary.h"
 #include "LoadingScreenSettings.h"
 
+// The only reason this exists and is not static is to reduce visible nodes to the user
+
 UMaterialInterface* UTransitionWidgetParent::GetTransitionMaterial() const
 {
-	return Cast<UMaterialInterface>(GetDefault<ULoadingScreenSettings>()->TransitionMaterial.TryLoad());
+	return ULoadingScreenFunctionLibrary::GetTransitionMaterial();
+}
+
+float UTransitionWidgetParent::GetTransitionPhase() const
+{
+	return ULoadingScreenFunctionLibrary::GetTransitionPhase();
+}
+
+void UTransitionWidgetParent::SetTransitionPhase(const float NewPhase)
+{
+	ULoadingScreenFunctionLibrary::SetTransitionPhase(NewPhase);
 }
 
 float UTransitionWidgetParent::GetTransitionDuration() const
 {
 	return ULoadingScreenFunctionLibrary::GetTransitionDuration();
+}
+
+ELoadingSequenceType UTransitionWidgetParent::GetLoadingSequenceType() const
+{
+	return ULoadingScreenFunctionLibrary::GetLoadingSequenceType();
 }
 
 TArray<UMaterialInterface*> UTransitionWidgetParent::GetLoadingSequence() const
@@ -25,14 +42,24 @@ int32 UTransitionWidgetParent::GetLoadingSequenceIndex() const
 	return ULoadingScreenFunctionLibrary::GetLoadingSequenceIndex();
 }
 
-float UTransitionWidgetParent::GetLoadingSequenceInterval()
+float UTransitionWidgetParent::GetLoadingSequenceTime() const
 {
-	return ULoadingScreenFunctionLibrary::GetLoadingSequenceIndex();
+	return ULoadingScreenFunctionLibrary::GetLoadingSequenceTime();
 }
 
 void UTransitionWidgetParent::IncrementLoadingSequenceIndex(const float DeltaTime) const
 {
 	ULoadingScreenFunctionLibrary::IncrementLoadingSequenceIndex(DeltaTime);
+}
+
+void UTransitionWidgetParent::SkipLoadingSequenceFrame() const
+{
+	ULoadingScreenFunctionLibrary::SkipLoadingSequenceFrame();
+}
+
+UMaterialInterface* UTransitionWidgetParent::GetAnimatedMaterial() const
+{
+	return ULoadingScreenFunctionLibrary::GetAnimatedMaterial();
 }
 
 FImageSettings UTransitionWidgetParent::GetBackgroundImage() const

@@ -17,19 +17,28 @@ public:
 	static void SetBackgroundImageIndex(const int32 NewIndex = -1);
 
 	static float GetTransitionDuration();
+	static float GetTransitionPhase();
+	static void SetTransitionPhase(const float NewPhase);
 	
+	static enum ELoadingSequenceType GetLoadingSequenceType();
 	static TArray<UMaterialInterface*> GetLoadingSequence();
-	static int32 GetLoadingSequenceIndex(); 
+	static int32 GetLoadingSequenceIndex();
+	static float GetLoadingSequenceTime();
 	static float GetLoadingSequenceInterval();
-	static void IncrementLoadingSequenceIndex(const float DeltaTime); 
+	static void IncrementLoadingSequenceIndex(const float DeltaTime);
+	static void SkipLoadingSequenceFrame();
+	static UMaterialInterface* GetAnimatedMaterial();
 	
 	static struct FImageSettings GetBackgroundImage();
 	
 	static UMaterialInterface* GetOverlayMaterial();
+	static UMaterialInterface* GetTransitionMaterial();
+
 
 private:
 		
 	static float TransitionDuration;
+	static float TransitionPhase;
 
 	static int32 BackgroundImageIndex;
 	static int32 BackgroundImageArrayNum;
@@ -38,4 +47,5 @@ private:
 	static int32 LoadingSequenceArrayNum;
 	static float LoadingSequenceInterval;
 	static float LoadingSequenceDeltaTime;
+	static float LoadingSequenceTime;
 };
