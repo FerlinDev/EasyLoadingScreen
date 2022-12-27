@@ -70,7 +70,7 @@ TArray<UMaterialInterface*> ULoadingScreenFunctionLibrary::GetLoadingSequence()
 	
 	if(CachedMaterials.Num() == 0)
 	{
-		const FSoftObjectPath TransparentAssetPath("Material'/EasyLoadingScreen/M_FullyTransparent.M_FullyTransparent'");
+		const FSoftObjectPath TransparentAssetPath("Material'/EasyLoadingScreen/ExampleMaterials/M_FullyTransparent.M_FullyTransparent'");
 		
 		if(const auto TransparentMaterial = Cast<UMaterialInterface>(TransparentAssetPath.TryLoad()))
 		{
