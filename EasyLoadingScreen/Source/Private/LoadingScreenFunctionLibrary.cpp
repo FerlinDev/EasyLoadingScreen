@@ -147,7 +147,7 @@ UMaterialInterface* ULoadingScreenFunctionLibrary::GetOverlayMaterial()
 	{
 		return Output;
 	}
-	const FSoftObjectPath TransparentAssetPath("Material'/EasyLoadingScreen/M_FullyTransparent.M_FullyTransparent'");
+	const FSoftObjectPath TransparentAssetPath("Material'/EasyLoadingScreen/ExampleMaterials/M_FullyTransparent.M_FullyTransparent'");
 	return Cast<UMaterialInterface>(TransparentAssetPath.TryLoad());
 }
 
