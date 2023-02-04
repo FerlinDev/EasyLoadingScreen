@@ -5,6 +5,7 @@
 #include "LoadingScreenFunctionLibrary.h"
 #include "LoadingScreenSettings.h"
 #include "MoviePlayer.h"
+#include "Kismet/GameplayStatics.h"
 #include "Slate/DeferredCleanupSlateBrush.h"
 #include "Widgets/Images/SImage.h"
 #include "Widgets/Layout/SScaleBox.h"

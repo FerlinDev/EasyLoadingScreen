@@ -19,7 +19,7 @@ struct FImageSettings
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
-	UTexture2D* Image;
+	UTexture2D* Image = nullptr;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	TEnumAsByte<EVerticalAlignment> VerticalAlignment = EVerticalAlignment::VAlign_Center;

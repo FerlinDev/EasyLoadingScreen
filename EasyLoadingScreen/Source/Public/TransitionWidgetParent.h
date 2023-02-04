@@ -4,51 +4,57 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/CanvasPanel.h"
 #include "TransitionWidgetParent.generated.h"
 
-UCLASS()
+UCLASS(Abstract, HideDropdown)
 class EASYLOADINGSCREEN_API UTransitionWidgetParent : public UUserWidget
 {
 	GENERATED_BODY()
 
 protected:
 	
-	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Loading Screen")
-	UMaterialInterface* GetTransitionMaterial() const;
+	virtual void NativeConstruct() override;
 
-	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Loading Screen")
-	float GetTransitionPhase() const;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
-	UFUNCTION(BlueprintCallable, Category = "Loading Screen")
-	void SetTransitionPhase(const float NewPhase);
+	void UpdateLoadingSequence();
 
-	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Loading Screen")
-	float GetTransitionDuration() const;
-
-	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Loading Screen")
-	enum ELoadingSequenceType GetLoadingSequenceType() const ;
+	UFUNCTION(BlueprintImplementableEvent)
+	UMaterialInterface* GetDefaultTransitionMaterial() const;
 	
-	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Loading Screen")
-	TArray<UMaterialInterface*> GetLoadingSequence() const;
+	UPROPERTY(BlueprintReadOnly, meta=(ExposeOnSpawn))
+	bool bFadeIn = false;
 	
-	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Loading Screen")
-	int32 GetLoadingSequenceIndex() const;
+	UPROPERTY(BlueprintReadOnly)
+	bool bFinishedTransition = false;
 	
-	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Loading Screen")
-	float GetLoadingSequenceTime() const;
+private:
 	
-	UFUNCTION( BlueprintCallable, Category = "Loading Screen")
-	void IncrementLoadingSequenceIndex(const float DeltaTime) const;
+	int SkippedFrames = 0;
+	float SkippedTime = 0.0f;
 
-	UFUNCTION( BlueprintCallable, Category = "Loading Screen")
-	void SkipLoadingSequenceFrame() const;
+	UPROPERTY(meta=(BindWidget))
+	UCanvasPanel* BackgroundLayer;
 
-	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Loading Screen")
-	UMaterialInterface* GetAnimatedMaterial() const;
+	UPROPERTY(meta=(BindWidget))
+	class UImage* TransitionLayer;
 
-	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Loading Screen")
-	struct FImageSettings GetBackgroundImage() const; 
+	UPROPERTY(meta=(BindWidget))
+	class UImage* BackgroundImage;
 
-	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Loading Screen")
-	UMaterialInterface* GetOverlayMaterial() const;
+	UPROPERTY(meta=(BindWidget))
+	class UImage* OverlayMaterial;
+
+	UPROPERTY(meta=(BindWidget))
+	class UImage* LoadingIcon;
+
+	UPROPERTY()
+	UMaterialInstanceDynamic* TransitionMaterial = nullptr;
+
+	UPROPERTY()
+	UMaterialInstanceDynamic* AnimatedLoadingMaterial = nullptr;
+
+	UPROPERTY()
+	TArray<UMaterialInterface*> LoadingImages;
 };

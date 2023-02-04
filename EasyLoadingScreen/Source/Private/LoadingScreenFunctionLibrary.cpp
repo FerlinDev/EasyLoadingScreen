@@ -136,9 +136,8 @@ FImageSettings ULoadingScreenFunctionLibrary::GetBackgroundImage()
 	{
 		return GetDefault<ULoadingScreenSettings>()->BackgroundImages[BackgroundImageIndex % BackgroundImageArrayNum];
 	}
-	FImageSettings NullOutput;
-	NullOutput.Image = nullptr;
-	return NullOutput;
+	
+	return FImageSettings();
 }
 
 UMaterialInterface* ULoadingScreenFunctionLibrary::GetOverlayMaterial()
